@@ -1,19 +1,23 @@
 /**
  * 二叉树中和为某一数值的路径
 */
-function FindPath(root, expectNumber){
-    if(!root) {return null;}
-    let res = [], path = [];
-    const findPathHelper = function(node,offset){
-        if (!node) { return; }
+const findPath = (root,sum) => {
+    if(!root){ return; }
+    const _findPath = (node,remain,path) => {
+        if(!node){ return; }
+        if(!node.left && !node.right && remain === node.val){
+            path.push(node.val);
+            return path;
+        }
         path.push(node.val);
-        if (!node.left && !node.right && offset === node.val){ res.push(path.slice()); }
-        findPathHelper(node.left,offset - node.val);
-        findPathHelper(node.right,offset - node.val);
+        let left = _findPath(node.left,remain-node.val,path);
+        if(left){ return left; }
+        let right = _findPath(node.right,remain-node.val,path);
+        if(right){ return right; }
         path.pop();
+        return;
     }
-    findPathHelper(root,expectNumber);
-    return res;
+    return _findPath(root,sum,[]);
 }
 
 function TreeNode(x) {
@@ -32,7 +36,7 @@ let n7 = new TreeNode(17);
 n1.left = n2; n1.right = n3;
 n2.left = n4; n2.right = n5;
 n3.left = n6; n3.right = n7;
-console.log(FindPath(n1,15));
+console.log(findPath(n1,26));
 
 module.exports = {
     FindPath : FindPath

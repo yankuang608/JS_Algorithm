@@ -1,21 +1,23 @@
 const { type } = require("os");
 
 function isCircular(root){
-    let stack = [];
-    stack.push(root);
-    while(stack.length){
-        const cur = stack.pop();
-        if(typeof cur === 'object'){
-            const keys = Object.keys(cur);
+    let path = [root];
+    const _isCircular = (node) => {
+        if(node && typeof node === 'object'){
+            const keys = Object.keys(node);
             for(let i=0; i<keys.length; i++){
-                if(stack.includes(cur[keys[i]])){
+                if(path.includes(node[keys[i]])){
                     return true;
+                }else{
+                    path.push(node[keys[i]]);
+                    _isCircular(node[keys[i]]);
+                    path.pop();
                 }
-                stack.push(cur[keys[i]]);
             }
-        }
+        } 
     }
-    return false;
+    _isCircular(root);
+    
 }
 
 let a = {};

@@ -10,6 +10,8 @@ function deepClone(obj){
     }
 }
 
+console.log(deepClone(obj));
+
 const cities = {
     'china':{
         'hunan':{

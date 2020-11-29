@@ -19,7 +19,7 @@ function Convert(pRootOfTree){
     let head = pRootOfTree;
     while(head && head.left){
         head = head.left;
-    }
+    }       
     return head;
 }
 
